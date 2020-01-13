@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    #emoji-container {
+      background-color: #36393f
+    }
+
+    img#s128, img#s32, img#s22 {
+      object-fit: contain;
+      padding: 32px;
+      visibility: hidden;
+    }
+    img#s128 {
+      width: 128px;
+      height: 128px;
+    }
+    img#s32 {
+      width: 32px;
+      height: 32px;
+    }
+    img#s22 {
+      width: 22px;
+      height: 22px;
+    }
+  </style>
+</head>
+<body ondrop="loadDroppedFile(event);" ondragover="allowDrop(event);" onpaste="loadPastedFile(event);">
+  <p><input id="file-selector" type="file" accept="image/*" onchange="loadSelectedFile(event);"></p>
+  <p id="picker-container">
+    <label for="background-picker">背景色: </label>
+    <input type="color" id="background-picker" name="background-picker" value="#36393f" onchange="loadColor(event);">
+    <button type="button" onclick="setColorDark();">ダーク</button>
+    <button type="button" onclick="setColorLight();">ライト</button>
+  </p>
+
+  <div id="emoji-container">
+    <p><img id="s128" src="#" alt="アップロードされた画像"></p>
+    <p><img id="s32" src="#" alt="アップロードされた画像"></p>
+    <p><img id="s22" src="#" alt="アップロードされた画像"></p>
+  </div>
+
+  <script>
+    function $(id) {
+      return document.getElementById(id);
+    }
+
+    function loadFile(file) {
+      document.querySelectorAll("img").forEach(img => {
+        img.src = URL.createObjectURL(file);
+        img.style.visibility = "visible";
+      });
+    }
+    function loadFromFiles(files) {
+      if (files.length > 0 && files[0].type.indexOf("image/") === 0) {
+        loadFile(files[0]);
+        $("file-selector").files = files;
+      }
+    }
+    function loadSelectedFile(event) {
+      loadFile(event.target.files[0]);
+    }
+    function allowDrop(event) {
+      event.preventDefault();
+    }
+    function loadDroppedFile(event) {
+      event.preventDefault();
+      loadFromFiles(event.dataTransfer.files);
+    }
+    function loadPastedFile(event) {
+      loadFromFiles(event.clipboardData.files);
+    }
+
+    function loadColor(event) {
+      $("emoji-container").style.backgroundColor = event.target.value;
+    }
+    function setColor(color) {
+      $("background-picker").value = color;
+      $("emoji-container").style.backgroundColor = color;
+    }
+    function setColorDark() {
+      setColor("#36393f");
+    }
+    function setColorLight() {
+      setColor("#ffffff");
+    }
+  </script>
+</body>
+</html>
