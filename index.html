@@ -9,6 +9,11 @@
     #emoji-container-second {
       background-color: #ffffff;
     }
+    #emoji-container-first > div,
+    #emoji-container-second > div {
+      display: inline-block;
+      margin-right: 20px;
+    }
 
     img.s128,
     img.s32,
@@ -35,15 +40,15 @@
   <p><input id="file-selector" type="file" accept="image/*" onchange="loadSelectedFile(event);"></p>
 
   <div id="emoji-container-first">
-    <p><img class="s128" src="#" alt="アップロードされた画像"></p>
-    <p><img class="s32" src="#" alt="アップロードされた画像"></p>
-    <p><img class="s22" src="#" alt="アップロードされた画像"></p>
+    <div><img class="s128" src="#" alt="アップロードされた画像"></div>
+    <div><img class="s32" src="#" alt="アップロードされた画像"></div>
+    <div><img class="s22" src="#" alt="アップロードされた画像"></div>
   </div>
 
   <div id="emoji-container-second">
-    <p><img class="s128" src="#" alt="アップロードされた画像"></p>
-    <p><img class="s32" src="#" alt="アップロードされた画像"></p>
-    <p><img class="s22" src="#" alt="アップロードされた画像"></p>
+    <div><img class="s128" src="#" alt="アップロードされた画像"></div>
+    <div><img class="s32" src="#" alt="アップロードされた画像"></div>
+    <div><img class="s22" src="#" alt="アップロードされた画像"></div>
   </div>
 
   <p>Tips: 画像はコピペやドラッグ＆ドロップでも OK です。</p>
