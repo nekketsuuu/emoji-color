@@ -3,24 +3,29 @@
 <head>
   <title>emoji-color</title>
   <style>
-    #emoji-container {
-      background-color: #36393f
+    #emoji-container-first {
+      background-color: #36393f;
+    }
+    #emoji-container-second {
+      background-color: #ffffff;
     }
 
-    img#s128, img#s32, img#s22 {
+    img.s128,
+    img.s32,
+    img.s22 {
       object-fit: contain;
       padding: 32px;
       visibility: hidden;
     }
-    img#s128 {
+    img.s128 {
       width: 128px;
       height: 128px;
     }
-    img#s32 {
+    img.s32 {
       width: 32px;
       height: 32px;
     }
-    img#s22 {
+    img.s22 {
       width: 22px;
       height: 22px;
     }
@@ -28,17 +33,17 @@
 </head>
 <body ondrop="loadDroppedFile(event);" ondragover="allowDrop(event);" onpaste="loadPastedFile(event);">
   <p><input id="file-selector" type="file" accept="image/*" onchange="loadSelectedFile(event);"></p>
-  <p id="picker-container">
-    <label for="background-picker">背景色: </label>
-    <input type="color" id="background-picker" name="background-picker" value="#36393f" onchange="loadColor(event);">
-    <button type="button" onclick="setColorDark();">ダーク</button>
-    <button type="button" onclick="setColorLight();">ライト</button>
-  </p>
 
-  <div id="emoji-container">
-    <p><img id="s128" src="#" alt="アップロードされた画像"></p>
-    <p><img id="s32" src="#" alt="アップロードされた画像"></p>
-    <p><img id="s22" src="#" alt="アップロードされた画像"></p>
+  <div id="emoji-container-first">
+    <p><img class="s128" src="#" alt="アップロードされた画像"></p>
+    <p><img class="s32" src="#" alt="アップロードされた画像"></p>
+    <p><img class="s22" src="#" alt="アップロードされた画像"></p>
+  </div>
+
+  <div id="emoji-container-second">
+    <p><img class="s128" src="#" alt="アップロードされた画像"></p>
+    <p><img class="s32" src="#" alt="アップロードされた画像"></p>
+    <p><img class="s22" src="#" alt="アップロードされた画像"></p>
   </div>
 
   <p>Tips: 画像はコピペやドラッグ＆ドロップでも OK です。</p>
@@ -72,20 +77,6 @@
     }
     function loadPastedFile(event) {
       loadFromFiles(event.clipboardData.files);
-    }
-
-    function loadColor(event) {
-      $("emoji-container").style.backgroundColor = event.target.value;
-    }
-    function setColor(color) {
-      $("background-picker").value = color;
-      $("emoji-container").style.backgroundColor = color;
-    }
-    function setColorDark() {
-      setColor("#36393f");
-    }
-    function setColorLight() {
-      setColor("#ffffff");
     }
   </script>
 </body>
