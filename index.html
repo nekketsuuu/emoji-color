@@ -34,9 +34,25 @@
       width: 22px;
       height: 22px;
     }
+
+    #window-cover {
+      box-sizing: border-box;
+      display: none;
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      left: 0;
+      top: 0;
+      z-index: 99999;
+
+      background: rgba(0, 0, 0, 0.2);
+	    border: 11px dashed #000000;
+    }
   </style>
 </head>
-<body ondrop="loadDroppedFile(event);" ondragover="allowDrop(event);" onpaste="loadPastedFile(event);">
+<body>
+  <div id="window-cover"></div>
+
   <p><input id="file-selector" type="file" accept="image/*" onchange="loadSelectedFile(event);"></p>
 
   <div id="emoji-container-first">
@@ -51,7 +67,7 @@
     <div><img class="s22" src="#" alt="アップロードされた画像"></div>
   </div>
 
-  <p>Tips: 画像はコピペやドラッグ＆ドロップでも OK です。バグ報告は<a href="https://github.com/nekketsuuu/emoji-color/issues">こちら</a>。</p>
+  <p>Tips: 画像はファイルのドラッグ＆ドロップやデータのコピペでも OK です。バグ報告は<a href="https://github.com/nekketsuuu/emoji-color/issues">こちら</a>。</p>
 
   <script>
     function $(id) {
@@ -73,16 +89,41 @@
     function loadSelectedFile(event) {
       loadFile(event.target.files[0]);
     }
+
+    function showDropZone() {
+      $("window-cover").style.display = "block";
+    }
+    function hideDropZone() {
+      $("window-cover").style.display = "none";
+    }
+
     function allowDrop(event) {
       event.preventDefault();
     }
-    function loadDroppedFile(event) {
+    function handleDrop(event) {
       event.preventDefault();
+      hideDropZone();
       loadFromFiles(event.dataTransfer.files);
     }
-    function loadPastedFile(event) {
-      loadFromFiles(event.clipboardData.files);
+    function handlePaste(event) {
+      event.stopPropagation();
+      event.preventDefault();
+      let clipboardData = event.clipboardData || window.clipboardData;
+      if (clipboardData.files) {
+        loadFromFiles(clipboardData.files);
+      }
     }
+
+    window.addEventListener("dragenter", event => {
+      showDropZone();
+    });
+    $("window-cover").addEventListener("dragenter", allowDrop);
+    $("window-cover").addEventListener("dragover", allowDrop);
+    $("window-cover").addEventListener("dragleave", event => {
+      hideDropZone();
+    });
+    $("window-cover").addEventListener("drop", handleDrop);
+    document.body.addEventListener("paste", handlePaste);
   </script>
 </body>
 </html>
